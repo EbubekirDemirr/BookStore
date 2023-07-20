@@ -307,8 +307,9 @@ namespace DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryName")
-                        .HasColumnType("integer");
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("timestamp with time zone");

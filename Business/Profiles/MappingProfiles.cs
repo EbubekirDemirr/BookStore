@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Entities.Concrete;
 using Entities.Concrete.Authentication;
+using Entities.Concrete.Models;
 using Entities.Concrete.Models.CreateModels;
 using Entities.Concrete.Models.DeleteModels;
 using Entities.Concrete.Models.UpdateModels;

@@ -1,5 +1,5 @@
 ﻿using Business.Abstract;
-using Core.Utilities.Results;
+using DataAccess.Concrete;
 using Entities.Concrete.Models.CreateModels;
 using Entities.Concrete.Models.DeleteModels;
 using Entities.Concrete.Models.UpdateModels;
@@ -13,9 +13,12 @@ public class CategoriesController : ControllerBase
 {
     private readonly ICategoryService _categoryService;
 
+    private readonly LibraryContext _libraryContext;
+
     public CategoriesController(ICategoryService categoryService)
     {
         _categoryService = categoryService;
+       
     }
 
     [HttpPost("category-Add")]
@@ -44,17 +47,6 @@ public class CategoriesController : ControllerBase
     public IActionResult Update(UpdateCategoryDTO category)
     {
         var result = _categoryService.UpdateEntity(category);
-        if (result.Success)
-        {
-            return Ok(result);
-        }
-        return BadRequest();
-    }
-
-    [HttpGet("getById")]
-    public IActionResult GetById(int id)
-    {
-        var result = _categoryService.GetByIdEntity(id);
         if (result.Success)
         {
             return Ok(result);

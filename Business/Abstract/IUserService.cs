@@ -10,7 +10,8 @@ namespace Business.Abstract;
 
 public interface IUserService
 {
-    Task<IDataResult<RegisterUser>> Register(RegisterUser registerUser , string password);
-    Task<IDataResult<LoginUser>> Login(LoginUser loginUser );
+    Task<IDataResult<RegisterUser>> Register(RegisterUser registerUser, string password);
+    Task<IDataResult<LoginUser>> Login(LoginUser loginUser);
+    Task<IDataResult<RegisterUser>> RegisterAdmin(RegisterUser registerUser, string password);
 
 }

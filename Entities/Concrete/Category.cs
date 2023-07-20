@@ -10,7 +10,7 @@ namespace Entities.Concrete
     public class Category : BaseEntity
     {
         public int Id { get; set; }
-        public int CategoryName { get; set; }
+        public string CategoryName { get; set; }
 
 
         public ICollection<BookAndCategory> BooksAndCategories { get; set; }

@@ -5,5 +5,4 @@ namespace Entities.Concrete.Authentication;
 
 public class AppUser: IdentityUser
 {
-
 }

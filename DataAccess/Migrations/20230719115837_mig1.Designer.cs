@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20230717112308_mig1")]
+    [Migration("20230719115837_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -310,8 +310,9 @@ namespace DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryName")
-                        .HasColumnType("integer");
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("timestamp with time zone");

@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constant;
 using Entities.Concrete.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -37,12 +38,37 @@ public class UsersController : ControllerBase
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token),
                 expiration = token.ValidTo,
-                result.Message
+                result.Message,
+                
             });
 
         }
         return BadRequest(result.Message);
     }
+
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] RegisterUser registerUser)
+    {
+        var result = await _userService.Register(registerUser, registerUser.Password );
+        if (result.Success)
+        {
+            return Ok(result.Message);
+        }
+        return BadRequest(result.Message);
+    }
+
+    [HttpPost("registerAdmin")]
+    public async Task<IActionResult> RegisterAdmin([FromBody] RegisterUser registerUser)
+    {
+        var result = await _userService.RegisterAdmin(registerUser, registerUser.Password);
+        if (result.Success)
+        {
+            return Ok(result);
+        }
+        return BadRequest(result.Message);
+    }
+
+
 
     private JwtSecurityToken GetToken(List<Claim> authClaims)
     {
@@ -57,16 +83,5 @@ public class UsersController : ControllerBase
             );
 
         return token;
-    }
-
-    [HttpPost("register")]
-    public async Task<ActionResult> Register([FromBody] RegisterUser registerUser)
-    {
-        var result = await _userService.Register(registerUser, registerUser.Password);
-        if (result.Success)
-        {
-            return Ok(result.Message);
-        }
-        return BadRequest(result.Message);
     }
 }

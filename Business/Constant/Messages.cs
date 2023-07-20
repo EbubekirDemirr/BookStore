@@ -14,4 +14,8 @@ public class Messages
     public static string UserFailedToCreate = "Kullanıcı oluşturulamadı";
     public static string PasswordError = "Hatalı Şifre veya Kullanıcı Adı";
     public static string AccessTokenCreated = "Token oluşturuldu, Giriş Başarılı";
+    public static string TwoFactorAuthenticationRequired = "Doğrulama Başarılı";
+    public static string RoleDoesnotExist = "Role Bulunamadı";
+    public static string Error = "Hatalı işlem";
+    public static string RoleNotFound = "Böyle bir rol bulunamadı";
 }

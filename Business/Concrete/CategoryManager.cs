@@ -17,11 +17,12 @@ public class CategoryManager: ICategoryService
     private readonly IUnitOfWorkDal _unitOfWorkDal;
     private readonly IMapper _mapper;
 
+
     public CategoryManager(ICategoryDal categoryDal, IUnitOfWorkDal unitOfWorkDal, IMapper mapper)
     {
         _categoryDal = categoryDal;
         _unitOfWorkDal = unitOfWorkDal;
-        _mapper = mapper;
+        _mapper = mapper;      
     }
 
     public IResult CreateEntity(CreateCategoryDTO tEntity)
@@ -40,10 +41,6 @@ public class CategoryManager: ICategoryService
         return new SuccessResult(Messages.Deleted);
     }
 
-    public IDataResult<Category> GetByIdEntity(int id)
-    {
-        return new SuccessDataResult<Category>(_categoryDal.GetById(id));
-    }
 
     public IResult UpdateEntity(UpdateCategoryDTO tEntity)
     {
@@ -52,4 +49,6 @@ public class CategoryManager: ICategoryService
         _unitOfWorkDal.Save();
         return new SuccessResult(Messages.Updated);
     }
+
+
 }
