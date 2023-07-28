@@ -1,6 +1,8 @@
 using AutoMapper;
 using Business.Abstract;
 using Business.Concrete;
+using Core.EmailSender;
+using Core.Redis;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
 using DataAccess.EntityFramework;
@@ -8,6 +10,7 @@ using DataAccess.UnitOfWork;
 using Entities.Concrete.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,10 +24,14 @@ builder.Services.AddControllers();
 
 var configuration = builder.Configuration;
 builder.Services.AddIdentity<AppUser, IdentityRole>()
-    .AddEntityFrameworkStores<LibraryContext>()
-    .AddDefaultTokenProviders();
+.AddEntityFrameworkStores<LibraryContext>()
+.AddDefaultTokenProviders();
 
+builder.Services.Configure<IdentityOptions>(options =>options.SignIn.RequireConfirmedEmail=true);
 
+builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<IOtpCodeDal, EfOtpCodeDal>();
+builder.Services.AddScoped<ICacheService, CacheService>();
 builder.Services.AddScoped<IUserService, UserServiceManager>();
 builder.Services.AddScoped<IBookService, BookManager>();
 builder.Services.AddScoped<IBookDal, EfBookDal>();
@@ -45,10 +52,15 @@ opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
 
-
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "RedisCacheDemo",
+        Version = "v1"
+    });
+});
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 
 var app = builder.Build();
 var mapper = app.Services.GetRequiredService<IMapper>();
@@ -56,8 +68,9 @@ var mapper = app.Services.GetRequiredService<IMapper>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RedisCacheDemo v1"));
 }
 
 app.UseHttpsRedirection();

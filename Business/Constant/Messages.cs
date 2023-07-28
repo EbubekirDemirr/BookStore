@@ -18,4 +18,6 @@ public class Messages
     public static string RoleDoesnotExist = "Role Bulunamadı";
     public static string Error = "Hatalı işlem";
     public static string RoleNotFound = "Böyle bir rol bulunamadı";
+    public static string VerifySucces = "Doğrulama Başarılı";
+    
 }

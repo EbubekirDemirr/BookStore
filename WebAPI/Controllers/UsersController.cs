@@ -1,6 +1,11 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
+using Business.Concrete;
 using Business.Constant;
+using Core.Utilities.Results;
 using Entities.Concrete.Authentication;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,10 +20,12 @@ public class UsersController : ControllerBase
 {
     private readonly IUserService _userService;
     private readonly IConfiguration _configuration;
-    public UsersController(IUserService userService, IConfiguration configuration)
+    private readonly UserManager<AppUser> _userManager;
+    public UsersController(IUserService userService, IConfiguration configuration, UserManager<AppUser> userManager)
     {
         _userService = userService;
         _configuration = configuration;
+        _userManager = userManager;
     }
 
     [HttpPost("login")]
@@ -38,8 +45,7 @@ public class UsersController : ControllerBase
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token),
                 expiration = token.ValidTo,
-                result.Message,
-                
+                result.Message,               
             });
 
         }
@@ -50,6 +56,16 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> Register([FromBody] RegisterUser registerUser)
     {
         var result = await _userService.Register(registerUser, registerUser.Password );
+        if (result.Success)
+        {
+            return Ok(result.Message);
+        } 
+        return BadRequest(result.Message);
+    }
+    [HttpGet("verify-userEmail")]
+    public async Task<IActionResult> VerifyUserEmail(string userId, int otpCode)
+    {
+        var result = await _userService.VerifyUserEmail(userId, otpCode);
         if (result.Success)
         {
             return Ok(result.Message);
@@ -67,8 +83,6 @@ public class UsersController : ControllerBase
         }
         return BadRequest(result.Message);
     }
-
-
 
     private JwtSecurityToken GetToken(List<Claim> authClaims)
     {

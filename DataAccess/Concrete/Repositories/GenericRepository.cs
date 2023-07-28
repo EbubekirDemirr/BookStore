@@ -1,5 +1,6 @@
 ﻿using DataAccess.Abstract;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace DataAccess.Concrete.Repositories;
 
@@ -45,5 +46,10 @@ public class GenericRepository<T> : IGenericDal<T> where T : class
     public T Get(T entity)
     {
         return _libraryContext.Set<T>().FirstOrDefault();
+    }
+
+    public T Get(Expression<Func<T, bool>> filter)
+    {
+         return _libraryContext.Set<T>().FirstOrDefault(filter);
     }
 }

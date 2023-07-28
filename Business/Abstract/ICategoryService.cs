@@ -5,6 +5,7 @@ using Entities.Concrete.Models.UpdateModels;
 using Entities.Concrete;
 using Entities.Concrete.Models.GetModels;
 using Entities.Concrete.Models;
+using Core.Utilities.Results;
 
 namespace Business.Abstract;
 
@@ -12,4 +13,5 @@ public interface ICategoryService: IBasicCreateEntity<CreateCategoryDTO>,
     IBasicDeleteEntity<DeleteCategoryDTO>,
     IBasicUpdateEntity<UpdateCategoryDTO>
 {
+    IEnumerable<CategoryModel> Get( );
 }

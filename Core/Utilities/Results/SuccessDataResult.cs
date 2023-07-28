@@ -20,7 +20,7 @@ namespace Core.Utilities.Results
         {
             
         }
-        public SuccessDataResult():base(default,true)
+        public SuccessDataResult(IDataResult<Entities.Concrete.Models.CategoryModel> cacheData) :base(default,true)
         {
             
         }

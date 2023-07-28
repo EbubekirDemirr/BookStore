@@ -11,8 +11,7 @@ namespace Business.Profiles;
 public class MappingProfiles: Profile
 {
     public MappingProfiles()
-    {
-
+    {    
         CreateMap<AppUser, RegisterUser>().ReverseMap();
         CreateMap<AppUser, LoginUser>().ReverseMap();
 
@@ -24,9 +23,11 @@ public class MappingProfiles: Profile
         CreateMap<Author, DeleteAuthorDTO> () .ReverseMap();
         CreateMap<Author, UpdateAuthorDTO> () .ReverseMap ();
 
+        CreateMap<Category, CategoryModel>().ReverseMap();
         CreateMap<Category, CreateCategoryDTO> ().ReverseMap();
         CreateMap<Category, DeleteCategoryDTO> () .ReverseMap();
         CreateMap<Category, UpdateCategoryDTO> () .ReverseMap();
+
 
         CreateMap<Publisher, CreatePublisherDTO> ().ReverseMap();
         CreateMap<Publisher, DeletePublisherDTO> () .ReverseMap();
