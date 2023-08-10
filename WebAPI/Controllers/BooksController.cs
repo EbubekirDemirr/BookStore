@@ -1,9 +1,9 @@
 ﻿using Business.Abstract;
-using Core.Utilities.Results;
 using Entities.Concrete.Models.CreateModels;
 using Entities.Concrete.Models.DeleteModels;
 using Entities.Concrete.Models.UpdateModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
 
 namespace WEBApi.Controllers;
 
@@ -61,5 +61,53 @@ public class BooksController : ControllerBase
             return Ok(result);
         }
         return BadRequest();
+    }
+    [HttpGet("book-GetAll")]
+    public IActionResult Get( )
+    {
+
+        var result = _bookService.Get();
+        if (result == null)
+        {
+            return NotFound();
+        }
+        return Ok(result);
+    }
+
+    [HttpGet("get-list")]
+
+    public  IActionResult GetList()
+    {
+        var result =  _bookService.GetListAsync();
+        if(result == null)
+        {
+            return BadRequest();
+        }
+        return Ok(result);
+
+    }
+
+    [HttpGet("getBookByAuthorId")]
+    public IActionResult GetBookByAuthorId(int id)
+    {
+        var result = _bookService.GetBookByAuthorId(id);
+        if (result.Success)
+        {
+            return Ok(result);
+        }
+        return BadRequest();
+       
+    }
+
+    [HttpGet("GetBookByCategoryId")]
+    public IActionResult GetBookByCategoryId(int id)
+    {
+        var result = _bookService.GetBookByCategoryId(id);
+        if (result.Success)
+        {
+            return Ok(result);
+        }
+        return BadRequest();
+
     }
 }

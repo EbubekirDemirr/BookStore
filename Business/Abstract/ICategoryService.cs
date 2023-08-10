@@ -13,5 +13,5 @@ public interface ICategoryService: IBasicCreateEntity<CreateCategoryDTO>,
     IBasicDeleteEntity<DeleteCategoryDTO>,
     IBasicUpdateEntity<UpdateCategoryDTO>
 {
-    IEnumerable<CategoryModel> Get( );
+    IDataResult<List<CategoryModel>> Get();
 }

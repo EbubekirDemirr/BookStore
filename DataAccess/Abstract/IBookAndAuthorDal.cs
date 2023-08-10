@@ -2,7 +2,7 @@
 
 namespace DataAccess.Abstract;
 
-public interface IAuthorDal:IGenericDal<Author>
+public interface IBookAndAuthorDal: IGenericDal<BookAndAuthor>
 {
-    
+
 }

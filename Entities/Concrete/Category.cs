@@ -12,7 +12,6 @@ namespace Entities.Concrete
         public int Id { get; set; }
         public string CategoryName { get; set; }
 
-
         public ICollection<BookAndCategory> BooksAndCategories { get; set; }
     }
 }

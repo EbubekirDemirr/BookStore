@@ -61,4 +61,15 @@ public class PublishersController : ControllerBase
         }
         return BadRequest();
     }
+    [HttpGet("publisher-GetAll")]
+    public IActionResult Get()
+    {
+
+        var result = _publisherService.Get();
+        if (result == null)
+        {
+            return BadRequest();
+        }
+        return Ok(result);
+    }
 }

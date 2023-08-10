@@ -64,5 +64,18 @@ namespace WEBApi.Controllers
             }
             return BadRequest();
         }
+        [HttpGet("author-GetAll")]
+        public IActionResult Get()
+        {
+
+            var result = _authorService.Get();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest();
+        }
+
+       
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Entities.Concrete;
 using Entities.Concrete.Authentication;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,7 +7,6 @@ namespace DataAccess.Concrete;
 
 public class LibraryContext : IdentityDbContext<AppUser>
 {
-
     public LibraryContext(DbContextOptions<LibraryContext> options):base(options)
     {
         

@@ -1,8 +1,9 @@
-﻿namespace Entities.Concrete.Models.GetModels;
+﻿namespace Entities.Concrete.Models;
 
-public class GetByIdAuthorDTO
+public class AuthorModel
 {
     public int Id { get; set; }
     public string AuthorFirstName { get; set; }
     public string AuthorLastName { get; set; }
+    public string Biography { get; set; }
 }

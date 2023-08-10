@@ -60,23 +60,21 @@ public class CategoryManager: ICategoryService
         return new SuccessResult(Messages.Updated);
     }
 
-    
-    public IEnumerable<CategoryModel> Get()
-    {
 
-        var cacheData = _cacheService.GetData<IEnumerable<CategoryModel>>("GetAllTest1");
+    public IDataResult<List<CategoryModel>> Get()
+    {
+        var cacheData = _cacheService.GetData<List<CategoryModel>>("GetCategory");
         if (cacheData != null)
         {
-            return cacheData;
+            return new SuccessDataResult<List<CategoryModel>>(cacheData);
         }
-        var expirationTime = DateTimeOffset.Now.AddMinutes(5.0);
+        var expirationTime = DateTimeOffset.Now.AddDays(5);
         var categories = _libraryContext.Categories.ToList();
-        var categoryModels = _mapper.Map<IEnumerable<CategoryModel>>(categories);
+        var categoryModels = _mapper.Map<List<CategoryModel>>(categories);
+        _cacheService.SetData("GetCategory", categoryModels, expirationTime);
 
-        _cacheService.SetData("GetAllTest1", categoryModels, expirationTime);
-
-        return categoryModels;
+        return new SuccessDataResult<List<CategoryModel>>(categoryModels);
     }
 
- 
+
 }

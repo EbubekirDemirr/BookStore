@@ -1,8 +1,8 @@
-﻿namespace Entities.Concrete.Models.GetModels;
+﻿namespace Entities.Concrete.Models.Books;
 
-public class GetByIdBookDTO
+public class BookNavigateDto
 {
-    public int Id { get; set; }
+    public string Id { get; set; }
     public string BookName { get; set; }
     public string PageCount { get; set; }
     public string Description { get; set; }
