@@ -1,11 +1,6 @@
-﻿using AutoMapper;
-using Business.Abstract;
-using Business.Concrete;
-using Business.Constant;
-using Core.Utilities.Results;
+﻿using Business.Abstract;
 using Entities.Concrete.Authentication;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

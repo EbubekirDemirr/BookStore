@@ -33,7 +33,7 @@ public class MappingProfiles: Profile
 
         CreateMap<BookAndAuthor, GetBooksDetail>().ReverseMap();
         CreateMap<BookAndCategory, GetBooksDetail>().ReverseMap();
-        
+        CreateMap<BookImage, CreateBookImageDto>().ReverseMap();
 
 
         #region Author
@@ -52,7 +52,6 @@ public class MappingProfiles: Profile
         CreateMap<Category, UpdateCategoryDTO>().ReverseMap();
         CreateMap<Category, CategoryNavigateDto>().ReverseMap();
         #endregion
-
 
         #region Publisher
         CreateMap<Publisher, PublisherModel>().ReverseMap();

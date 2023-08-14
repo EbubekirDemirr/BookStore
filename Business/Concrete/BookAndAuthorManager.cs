@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business.Abstract;
+using Business.Abstract.CrudInterfaces;
 using Business.Constant;
 using Core.Utilities.Results;
 using DataAccess.Abstract;

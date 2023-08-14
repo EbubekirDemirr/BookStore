@@ -1,5 +1,4 @@
 ﻿using Business.Abstract;
-using Core.Utilities.Results;
 using Entities.Concrete.Models.CreateModels;
 using Entities.Concrete.Models.DeleteModels;
 using Entities.Concrete.Models.UpdateModels;

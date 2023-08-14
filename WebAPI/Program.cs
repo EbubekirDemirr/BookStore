@@ -3,6 +3,7 @@ using Business.Abstract;
 using Business.Concrete;
 using Core.EmailSender;
 using Core.Redis;
+using Core.Utilities.Helpers.FileHelper;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
 using DataAccess.EntityFramework;
@@ -36,6 +37,9 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
 builder.Services.Configure<IdentityOptions>(options => options.SignIn.RequireConfirmedEmail = true);
 
 builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<IBookImageService, BookImageManager>();
+builder.Services.AddScoped<IBookImageDal, EfBookImageDal>();
+builder.Services.AddScoped<IFileHelper, FileHelperManager>();
 builder.Services.AddScoped<IBookAndCategoryService, BookAndCategoryManager>();
 builder.Services.AddScoped<IBookAndCategoryDal, EfBookAndCategoryDal>();
 builder.Services.AddScoped<IBookAndAuthorService, BookAndAuthorManager>();

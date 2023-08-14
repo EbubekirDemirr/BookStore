@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business.Abstract;
+using Business.Abstract.CrudInterfaces;
 using Business.Constant;
 using Core.Redis;
 using Core.Utilities.Results;
@@ -76,4 +77,6 @@ public class AuthorManager: IAuthorService
 
         return new SuccessDataResult<List<AuthorModel>>(authorModels);
     }
+
+   
 }
