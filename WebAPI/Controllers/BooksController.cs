@@ -66,25 +66,12 @@ public class BooksController : ControllerBase
     public IActionResult Get( )
     {
 
-        var result = _bookService.Get();
+        var result = _bookService.GetAll();
         if (result == null)
         {
             return NotFound();
         }
         return Ok(result);
-    }
-
-    [HttpGet("get-list")]
-
-    public  IActionResult GetList()
-    {
-        var result =  _bookService.GetListAsync();
-        if(result == null)
-        {
-            return BadRequest();
-        }
-        return Ok(result);
-
     }
 
     [HttpGet("getBookByAuthorId")]
@@ -110,4 +97,27 @@ public class BooksController : ControllerBase
         return BadRequest();
 
     }
+
+    [HttpGet("GetBookWithBookImageByBookId")]
+    public IActionResult GetBookWithBookImageByBookId(int id)
+    {
+        var result = _bookService.GetBookWithBookImageByBookId(id);
+        if (result.Success)
+        {
+            return Ok(result);
+        }
+        return BadRequest();
+    }
+
+    [HttpGet("searched-books")]
+    public IActionResult GetSearchedBooks(string bookName)
+    {
+        var result = _bookService.GetSearchedBooks(bookName);
+        if (result.Success)
+        {
+            return Ok(result);
+        }
+        return BadRequest();
+    }
+
 }

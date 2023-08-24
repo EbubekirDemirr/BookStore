@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results;
 using Entities.Concrete.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -26,25 +27,28 @@ public class UsersController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginUser loginUser)
     {
-        var result = await _userService.Login(loginUser);
-        if (result.Success)
+        var userToLogin = await _userService.Login(loginUser);
+        if (!userToLogin.Success)
         {
-            var authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, loginUser.UserName ),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                };
-            var token = GetToken(authClaims);
-
-            return Ok(new
-            {
-                token = new JwtSecurityTokenHandler().WriteToken(token),
-                expiration = token.ValidTo,
-                result.Message,               
-            });
-
+            return BadRequest(userToLogin.Message);
         }
-        return BadRequest(result.Message);
+
+        var authClaims = new List<Claim>
+{
+    new Claim(ClaimTypes.Name, loginUser.UserName),
+    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+};
+        var token = GetToken(authClaims);
+
+        var responseData = new
+        {
+            token = new JwtSecurityTokenHandler().WriteToken(token),
+            expiration = token.ValidTo,
+            message = userToLogin.Message,
+        };
+
+        return Ok(new { data = responseData });
+
     }
 
     [HttpPost("register")]
@@ -57,16 +61,16 @@ public class UsersController : ControllerBase
         } 
         return BadRequest(result.Message);
     }
-    [HttpGet("verify-userEmail")]
-    public async Task<IActionResult> VerifyUserEmail(string userId, int otpCode)
-    {
-        var result = await _userService.VerifyUserEmail(userId, otpCode);
-        if (result.Success)
-        {
-            return Ok(result.Message);
-        }
-        return BadRequest(result.Message);
-    }
+    //[HttpGet("verify-userEmail")]
+    //public async Task<IActionResult> VerifyUserEmail(string userId, int otpCode)
+    //{
+    //    var result = await _userService.VerifyUserEmail(userId, otpCode);
+    //    if (result.Success)
+    //    {
+    //        return Ok(result.Message);
+    //    }
+    //    return BadRequest(result.Message);
+    //}
 
     [HttpPost("registerAdmin")]
     public async Task<IActionResult> RegisterAdmin([FromBody] RegisterUser registerUser)

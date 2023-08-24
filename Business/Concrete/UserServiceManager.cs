@@ -36,7 +36,7 @@ public class UserServiceManager : IUserService
         var result = await _userManager.FindByNameAsync(loginUser.UserName);
         if (result != null && await _userManager.CheckPasswordAsync(result, loginUser.Password))
         {
-            if (!result.EmailConfirmed) return new ErrorDataResult<LoginUser>("lütfen kullanıcı doğrula");
+            //if (!result.EmailConfirmed) return new ErrorDataResult<LoginUser>("lütfen kullanıcı doğrula");
             var userRoles = await _userManager.GetRolesAsync(result);
 
             var authClaims = new List<Claim>
@@ -73,24 +73,24 @@ public class UserServiceManager : IUserService
         {
             return new ErrorDataResult<RegisterUser>(Messages.UserFailedToCreate);                    
         }
-        int otpCode = GenerateOTP();
-        _otpCodeDal.Insert(new UserOtpCode
-        {
-            UserId=mappedAppUser.Id,
-            OtpCode=otpCode,          
-        });
-        _emailService.SendEmail(registerUser.Email, otpCode, mappedAppUser.Id);
+        //int otpCode = GenerateOTP();
+        //_otpCodeDal.Insert(new UserOtpCode
+        //{
+        //    UserId=mappedAppUser.Id,
+        //    OtpCode=otpCode,          
+        //});
+        //_emailService.SendEmail(registerUser.Email, otpCode, mappedAppUser.Id);
         _unitOfWorkDal.Save();
         return new SuccessDataResult<RegisterUser>(Messages.Created);
 
     }
 
-    private int GenerateOTP()
-    {
-        Random random = new Random();
-        int otpCode = random.Next(100000, 999999);
-        return otpCode;
-    }
+    //private int GenerateOTP()
+    //{
+    //    Random random = new Random();
+    //    int otpCode = random.Next(100000, 999999);
+    //    return otpCode;
+    //}
     public async Task<IDataResult<RegisterUser>> RegisterAdmin(RegisterUser registerUser, string password)
     {
         var userExists = await _userManager.FindByNameAsync(registerUser.UserName);
@@ -126,23 +126,23 @@ public class UserServiceManager : IUserService
         return new SuccessDataResult<RegisterUser>(Messages.UserCreated);
     }
 
-    public async Task<IResult> VerifyUserEmail(string userId, int otpCode)
-    {
-        var data = _otpCodeDal.Get(q=> q.UserId==userId);
-        if (data == null)
-        {
-            return new ErrorResult(Messages.Error);
-        }
-        if (data.UserId == userId && data.OtpCode == otpCode)
-        {
-            var user = await _userManager.FindByIdAsync(userId);
-            user.EmailConfirmed = true;
-            user.TwoFactorEnabled = true;
+    //public async Task<IResult> VerifyUserEmail(string userId, int otpCode)
+    //{
+    //    var data = _otpCodeDal.Get(q=> q.UserId==userId);
+    //    if (data == null)
+    //    {
+    //        return new ErrorResult(Messages.Error);
+    //    }
+    //    if (data.UserId == userId && data.OtpCode == otpCode)
+    //    {
+    //        var user = await _userManager.FindByIdAsync(userId);
+    //        user.EmailConfirmed = true;
+    //        user.TwoFactorEnabled = true;
 
-            await _userManager.UpdateAsync(user);
-            return new SuccessResult("Kullanıcı doğrulandı");
-        }
-        return new ErrorResult(Messages.Error);
+    //        await _userManager.UpdateAsync(user);
+    //        return new SuccessResult("Kullanıcı doğrulandı");
+    //    }
+    //    return new ErrorResult(Messages.Error);
 
-    }
+    //}
 }

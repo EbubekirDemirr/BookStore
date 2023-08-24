@@ -20,5 +20,6 @@ public class LibraryContext : IdentityDbContext<AppUser>
     public DbSet<Category> Categories { get; set; }
     public DbSet<Publisher> Publishers { get; set; }
     public DbSet<UserOtpCode> UserOtpCodes { get; set; }
+    public DbSet<AuthorImage> AuthorImages { get; set; }
     
 }

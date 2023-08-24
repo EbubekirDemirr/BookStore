@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class BookAndCategoryController : Controller
     {
         private readonly IBookAndCategoryService _bookAndCategoryService;
@@ -23,7 +25,7 @@ namespace WebAPI.Controllers
             return BadRequest();
         }
 
-        [HttpGet("getBookAndAuthorById")]
+        [HttpGet("getBookAndCategoryById")]
         public IActionResult Get(int id)
         {
             var result = _bookAndCategoryService.GetByIdEntity(id);

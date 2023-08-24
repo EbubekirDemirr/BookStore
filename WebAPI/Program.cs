@@ -37,8 +37,11 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
 builder.Services.Configure<IdentityOptions>(options => options.SignIn.RequireConfirmedEmail = true);
 
 builder.Services.AddScoped<EmailService>();
+
 builder.Services.AddScoped<IBookImageService, BookImageManager>();
 builder.Services.AddScoped<IBookImageDal, EfBookImageDal>();
+builder.Services.AddScoped<IAuthorImageDal, EfAuthorImageDal>();
+builder.Services.AddScoped<IAuthorImageService, AuthorImageManager>();
 builder.Services.AddScoped<IFileHelper, FileHelperManager>();
 builder.Services.AddScoped<IBookAndCategoryService, BookAndCategoryManager>();
 builder.Services.AddScoped<IBookAndCategoryDal, EfBookAndCategoryDal>();
@@ -90,8 +93,9 @@ if (app.Environment.IsDevelopment())
 }
 
 
-app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
+app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseAuthentication();
 
 app.UseAuthorization();

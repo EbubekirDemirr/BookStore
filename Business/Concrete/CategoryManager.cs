@@ -6,6 +6,7 @@ using Core.Redis;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
+using DataAccess.EntityFramework;
 using DataAccess.UnitOfWork;
 using Entities.Concrete;
 using Entities.Concrete.Models;
@@ -75,6 +76,8 @@ public class CategoryManager: ICategoryService
 
         return new SuccessDataResult<List<CategoryModel>>(categoryModels);
     }
-
-
+    public IDataResult<Category> GetByIdEntity(int id)
+    {
+        return new SuccessDataResult<Category>(_categoryDal.GetById(id));
+    }
 }

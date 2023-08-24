@@ -15,6 +15,7 @@ namespace Entities.Concrete
         public string Biography { get; set; }
 
         public ICollection<BookAndAuthor> BooksAndAuthors { get; set; }
+        public ICollection<AuthorImage> AuthorImages { get; set; }
 
     }
 }

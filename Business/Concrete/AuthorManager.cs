@@ -6,12 +6,14 @@ using Core.Redis;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
+using DataAccess.EntityFramework;
 using DataAccess.UnitOfWork;
 using Entities.Concrete;
 using Entities.Concrete.Models;
 using Entities.Concrete.Models.CreateModels;
 using Entities.Concrete.Models.DeleteModels;
 using Entities.Concrete.Models.UpdateModels;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace Business.Concrete;
@@ -63,7 +65,7 @@ public class AuthorManager: IAuthorService
         return new SuccessResult(Messages.Updated);
     }
 
-    public IDataResult<List<AuthorModel>> Get()
+    public IDataResult<List<AuthorModel>> GetAll()
     {
         var cacheData = _cacheService.GetData<List<AuthorModel>>("GetAuthor");
         if (cacheData != null)
@@ -71,12 +73,18 @@ public class AuthorManager: IAuthorService
             return new SuccessDataResult<List<AuthorModel>>(cacheData);
         }
         var expirationTime = DateTimeOffset.Now.AddDays(5);
-        var authors = _libraryContext.Authors.ToList();
+
+        var authors = _authorDal.GetAll().Include(x => x.AuthorImages).ToList();
         var authorModels = _mapper.Map<List<AuthorModel>>(authors);
-        _cacheService.SetData("GetAllTest1", authorModels, expirationTime);
+        _cacheService.SetData("GetAuthor", authorModels, expirationTime);
 
         return new SuccessDataResult<List<AuthorModel>>(authorModels);
     }
+    public IDataResult<AuthorModel> GetAuthorDetail(int id)
+    {
+        var result = _authorDal.GetX(x => x.Id == id).Include(y => y.AuthorImages).FirstOrDefault();
+        var mapped = _mapper.Map<AuthorModel>(result);
+        return new SuccessDataResult<AuthorModel>(mapped);
+    }
 
-   
 }

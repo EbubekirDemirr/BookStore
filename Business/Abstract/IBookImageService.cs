@@ -8,9 +8,7 @@ namespace Business.Abstract;
 
 public interface IBookImageService
 {
-    IDataResult<List<BookImage>> GetAll();
-    IDataResult<List<BookImage>> GetByBookId(int bookId);
-    IDataResult<BookImage> GetByImageId(int imageId);
 
+    IDataResult<List<BookImage>> GetByBookId(int bookId);
     Core.Utilities.Results.IResult Add(IFormFile formFile, CreateBookImageDto bookImage);
 }

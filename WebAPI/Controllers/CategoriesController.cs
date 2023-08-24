@@ -73,4 +73,15 @@ public class CategoriesController : ControllerBase
         }
         return Ok(result);
     }
+
+    [HttpGet("get-CategoryById")]
+    public IActionResult GetById(int id)
+    {
+        var result = _categoryService.GetByIdEntity(id);
+        if (result.Success)
+        {
+            return Ok(result);
+        }
+        return BadRequest();
+    }
 }

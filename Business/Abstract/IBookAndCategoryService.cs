@@ -6,5 +6,5 @@ namespace Business.Abstract;
 
 public interface IBookAndCategoryService: IBasicGetListEntity<GetBooksDetail>
 {
-    IDataResult<IEnumerable<GetBooksDetail>> GetByIdEntity(int id);
+    IDataResult<List<GetBooksDetail>> GetByIdEntity(int id);
 }

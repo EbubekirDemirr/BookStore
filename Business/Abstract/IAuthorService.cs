@@ -13,5 +13,6 @@ public interface IAuthorService: IBasicCreateEntity<CreateAuthorDTO>,
     IBasicUpdateEntity<UpdateAuthorDTO>,
     IBasicGetByIdEntity<Author, int>
 {
-    IDataResult<List<AuthorModel>> Get();
+    IDataResult<List<AuthorModel>> GetAll();
+    IDataResult<AuthorModel> GetAuthorDetail(int id);
 }

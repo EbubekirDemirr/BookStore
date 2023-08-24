@@ -16,5 +16,6 @@ namespace Entities.Concrete
 
         public int AuthorId { get; set; }
         public Author Authors { get; set; }
+
     }
 }

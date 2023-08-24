@@ -4,6 +4,7 @@ using Business.Abstract.CrudInterfaces;
 using Business.Constant;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.EntityFramework;
 using DataAccess.UnitOfWork;
 using Entities.Concrete;
 using Entities.Concrete.Models.BookAndAuthor;
@@ -23,11 +24,11 @@ public class BookAndCategoryManager : IBookAndCategoryService
         _mapper = mapper;
         _bookAndCategoryDal = bookAndCategoryDal;
     }
-    public IDataResult<IEnumerable<GetBooksDetail>> GetByIdEntity(int id)
+    public IDataResult<List<GetBooksDetail>> GetByIdEntity(int id)
     {
-        var result = _bookAndCategoryDal.GetX(x => x.Id == id).Include(y => y.Categories).Include(z => z.Books);
-        var mapped = result.Select(item => _mapper.Map<GetBooksDetail>(item));
-        return new SuccessDataResult<IEnumerable<GetBooksDetail>>(mapped);
+        var result = _bookAndCategoryDal.GetX(x => x.CategoryId == id).AsNoTracking().Include(z => z.Books).Include(z => z.Books.BookImages).Include(x => x.Categories).ToList();
+        var mapped = _mapper.Map<List<GetBooksDetail>>(result);
+        return new SuccessDataResult<List<GetBooksDetail>>(mapped);
     }
 
     public IDataResult<IEnumerable<GetBooksDetail>> GetListAsync()

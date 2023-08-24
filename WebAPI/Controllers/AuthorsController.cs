@@ -67,7 +67,18 @@ namespace WEBApi.Controllers
         public IActionResult Get()
         {
 
-            var result = _authorService.Get();
+            var result = _authorService.GetAll();
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("getAuthorDetail")]
+        public IActionResult GetAuthorDetail(int id)
+        {
+            var result = _authorService.GetAuthorDetail(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -75,6 +86,6 @@ namespace WEBApi.Controllers
             return BadRequest();
         }
 
-       
+
     }
 }

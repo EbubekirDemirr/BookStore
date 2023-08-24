@@ -44,6 +44,7 @@ public class GenericRepository<T> : IGenericDal<T> where T : BaseEntity, new()
     {
         return _libraryContext.Set<T>().Where(filter);
     }
+
     public IEnumerable<T> GetList(Expression<Func<T, bool>> expression = null)
     {
        return expression==null ? _libraryContext.Set<T>().AsNoTracking(): _libraryContext.Set<T>().Where(expression).AsNoTracking();

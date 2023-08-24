@@ -27,5 +27,15 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
+        [HttpGet("get-ImageByBookId")]
+        public IActionResult GetByCarId(int bookId)
+        {
+            var result = _bookImageService.GetByBookId(bookId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return Ok(result);
+        }
     }
 }
